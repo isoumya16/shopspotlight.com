@@ -1,0 +1,63 @@
+/* Ensuring full width layout */
+.admin-container {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* First column (Sidebar-like fixed width) */
+.admin-container td:first-child {
+  width: 250px; /* Fixed width */
+  min-width: 200px; /* Ensuring it doesn't shrink too much */
+  max-width: 250px;
+  /* background-color: #007bff; */
+  text-align: center;
+  font-weight: bold;
+  padding: 15px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.admin-container .sidebar-option:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+/* Second column (Flexible content area) */
+.admin-container td[rowspan="3"] {
+  width: 100%; /* Takes the remaining width */
+  padding: 20px;
+  vertical-align: top;
+  background-color: #f9f9f9;
+}
+
+/* Making the table stack on smaller screens */
+@media screen and (max-width: 768px) {
+  .admin-container {
+    display: block;
+  }
+
+  .admin-container tr {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .admin-container td:first-child {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .admin-container td[rowspan="3"] {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .admin-container td:first-child {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .admin-container td[rowspan="3"] {
+    padding: 10px;
+  }
+}

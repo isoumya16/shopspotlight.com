@@ -1,0 +1,91 @@
+.banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background: #e8482c;
+    min-height: 100px;
+}
+
+.banner .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    height: 400px;
+}
+
+.banner .container .detail {
+    flex: 1;
+}
+
+.banner .container .detail h4 {
+    font-size: 45px;
+    color: #fff;
+    margin: 0 0 10px;
+    text-transform: uppercase;
+}
+
+.banner .container .detail h3 {
+    font-size: 24px;
+    margin: 0 0 10px;
+    color: #fff;
+}
+
+.banner .container .detail p {
+    font-size: 20px;
+    margin: 0 0 15px;
+    color: #fff;
+}
+
+.banner .container .detail .link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #000;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: 0.3s ease;
+}
+
+.banner .container .detail .link:hover {
+    background: #ffffff;
+    color: #000;
+}
+
+.banner .img_box {
+    flex: 1;
+    text-align: right;
+    max-width: 500px;
+    max-height: 500px;
+}
+
+.banner .img_box img {
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    background: transparent;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 2rem;
+    z-index: 10;
+}
+
+.prev {
+    left: 2%;
+}
+
+.next {
+    right: 2%;
+}
