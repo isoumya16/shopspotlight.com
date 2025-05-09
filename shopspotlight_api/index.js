@@ -1,11 +1,18 @@
 const express = require('express');
-const port = 5000;
 const cors = require('cors');
 const path = require("path");
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 const app = express();
+const port = process.env.PORT || 5000;
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true
+}));
 
 // const publicDirectory = path.join(__dirname, '../backend/public/img');
 // app.use('/image', express.static('public/image'));
