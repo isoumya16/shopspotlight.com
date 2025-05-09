@@ -57,7 +57,7 @@ const Registration = () => {
       //   setimage({ preview: response.data.message[0].user_image, data: response.data.message[0].user_image });
       // })
 
-      fetch('http://localhost:5000/users/singleuserlist/' + params.id)
+      fetch(`${process.env.REACT_APP_BACKEND_URL}/users/singleuserlist/${params.id}`)
         .then(response => response.json())
         .then(response => {
           console.log(response.message[0]);
@@ -171,7 +171,7 @@ const Registration = () => {
       // )
 
       try {
-        const response = await fetch('http://localhost:5000/users/registration/', {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/registration/`, {
           method: 'POST',
           body: formData,
         });
@@ -188,7 +188,7 @@ const Registration = () => {
       }
     } else if (location.pathname.split('/')[2] == "edituser") {
       try {
-        const response = await fetch('http://localhost:5000/users/updateuser/' + params.id, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/updateuser/${params.id}`, {
             method: 'PUT',
             body: formData,
         });
@@ -203,7 +203,7 @@ const Registration = () => {
     } else if (location.pathname.split('/')[1] == "login") {
       let formData = { firstname: firstname, lastname: lastname, mobileno: mobileno, email: email, password: password };
 
-      axios.post('http://localhost:5000/users/login/', formData).then((response) => {
+      axios.post(`${process.env.REACT_APP_BACKEND_URL}/users/login/`, formData).then((response) => {
         // console.log(response.data.message);
 
         if (response.data.message == "Either password or email is wrong") {
