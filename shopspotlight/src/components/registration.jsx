@@ -60,16 +60,29 @@ const Registration = () => {
       fetch(`${process.env.REACT_APP_BACKEND_URL}/users/singleuserlist/${params.id}`)
         .then(response => response.json())
         .then(response => {
-          console.log(response.message[0]);
+          if (response.message && Array.isArray(response.message) && response.message.length > 0) {
+            console.log(response.message[0]);
 
-          setfirstname(response.message[0].firstname);
-          setlastname(response.message[0].lastname);
-          setmobileno(response.message[0].mobileno);
-          setuseraccess(response.message[0].useraccess);
-          setemail(response.message[0].email);
-          setpassword(response.message[0].password);
-          setimage({ preview: response.message[0].user_image, data: response.message[0].user_image });
+            setfirstname(response.message[0].firstname);
+            setlastname(response.message[0].lastname);
+            setmobileno(response.message[0].mobileno);
+            setuseraccess(response.message[0].useraccess);
+            setemail(response.message[0].email);
+            setpassword(response.message[0].password);
+            setimage({
+              preview: response.message[0].user_image,
+              data: response.message[0].user_image,
+            });
+          } else {
+            console.error("User data is missing or in unexpected format:", response);
+            setformerror("Failed to load user data.");
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching user data:", error);
+          setformerror("Error fetching user data. Please try again.");
         });
+
     }
   }, [])
 
@@ -189,17 +202,17 @@ const Registration = () => {
     } else if (location.pathname.split('/')[2] == "edituser") {
       try {
         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/updateuser/${params.id}`, {
-            method: 'PUT',
-            body: formData,
+          method: 'PUT',
+          body: formData,
         });
 
         if (response.ok) {
-            navigate('/admin/userlist');
+          navigate('/admin/userlist');
         }
-    } catch (error) {
+      } catch (error) {
         console.error("Error updating user:", error);
         setformerror('An error occurred while updating. Please try again.');
-    }
+      }
     } else if (location.pathname.split('/')[1] == "login") {
       let formData = { firstname: firstname, lastname: lastname, mobileno: mobileno, email: email, password: password };
 
