@@ -60,18 +60,18 @@ const Registration = () => {
       fetch(`${process.env.REACT_APP_BACKEND_URL}/users/singleuserlist/${params.id}`)
         .then(response => response.json())
         .then(response => {
-          if (response.message && Array.isArray(response.message) && response.message.length > 0) {
-            console.log(response.message[0]);
+          if (response.data.message && Array.isArray(response.data.message) && response.data.message.length > 0) {
+            console.log(response.data.message[0]);
 
-            setfirstname(response.message[0].firstname);
-            setlastname(response.message[0].lastname);
-            setmobileno(response.message[0].mobileno);
-            setuseraccess(response.message[0].useraccess);
-            setemail(response.message[0].email);
-            setpassword(response.message[0].password);
+            setfirstname(response.data.message[0].firstname);
+            setlastname(response.data.message[0].lastname);
+            setmobileno(response.data.message[0].mobileno);
+            setuseraccess(response.data.message[0].useraccess);
+            setemail(response.data.message[0].email);
+            setpassword(response.data.message[0].password);
             setimage({
-              preview: response.message[0].user_image,
-              data: response.message[0].user_image,
+              preview: response.data.message[0].user_image,
+              data: response.data.message[0].user_image,
             });
           } else {
             console.error("User data is missing or in unexpected format:", response);
