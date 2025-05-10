@@ -28,63 +28,44 @@ const Registration = () => {
   console.log(location.pathname.split('/'));
 
   useEffect(() => {
-    if (location.pathname.split('/')[1] == "registration") {
-      setformname('Registration');
-      setbuttonname('Registration');
-    }
+  if (location.pathname.split('/')[1] === "registration") {
+    setformname('Registration');
+    setbuttonname('Register');
+  } else if (location.pathname.split('/')[1] === "login") {
+    setformname('Login');
+    setbuttonname('Login');
+    setfirstname('default');
+    setlastname('default');
+    setmobileno('1111111111');
+  } else if (location.pathname.split('/')[2] === "edituser") {
+    setformname('Update User Form');
+    setbuttonname('Update User');
 
-    if (location.pathname.split('/')[1] == "login") {
-      setformname('Login');
-      setbuttonname('Login');
-      setfirstname('default');
-      setlastname('default');
-      setmobileno('1111111111');
-    }
-
-    if (location.pathname.split('/')[2] == "edituser") {
-      setformname('Update User Form');
-      setbuttonname('Update User');
-
-      // axios.get('http://localhost:5000/users/singleuserlist/' + params.id).then((response) => {
-      //   console.log(response.data.message[0]);
-
-      //   setfirstname(response.data.message[0].firstname);
-      //   setlastname(response.data.message[0].lastname);
-      //   setmobileno(response.data.message[0].mobileno);
-      //   setuseraccess(response.data.message[0].useraccess);
-      //   setemail(response.data.message[0].email);
-      //   setpassword(response.data.message[0].password);
-      //   setimage({ preview: response.data.message[0].user_image, data: response.data.message[0].user_image });
-      // })
-
-      fetch(`${process.env.REACT_APP_BACKEND_URL}/users/singleuserlist/${params.id}`)
-        .then(response => response.json())
-        .then(response => {
-          if (response.data.message && Array.isArray(response.data.message) && response.data.message.length > 0) {
-            console.log(response.data.message[0]);
-
-            setfirstname(response.data.message[0].firstname);
-            setlastname(response.data.message[0].lastname);
-            setmobileno(response.data.message[0].mobileno);
-            setuseraccess(response.data.message[0].useraccess);
-            setemail(response.data.message[0].email);
-            setpassword(response.data.message[0].password);
-            setimage({
-              preview: response.data.message[0].user_image,
-              data: response.data.message[0].user_image,
-            });
-          } else {
-            console.error("User data is missing or in unexpected format:", response);
-            setformerror("Failed to load user data.");
-          }
-        })
-        .catch(error => {
-          console.error("Error fetching user data:", error);
-          setformerror("Error fetching user data. Please try again.");
-        });
-
-    }
-  }, [])
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/users/singleuserlist/${params.id}`)
+      .then(res => res.json())
+      .then(response => {
+        if (response.error) {
+          console.error(response.error);
+          setformerror(response.error);
+        } else if (response.data) {
+          const user = response.data;
+          setfirstname(user.firstname);
+          setlastname(user.lastname);
+          setmobileno(user.mobileno);
+          setuseraccess(user.useraccess);
+          setemail(user.email);
+          setpassword(user.password);
+          setimage({ preview: user.user_image, data: user.user_image });
+        } else {
+          setformerror('No user data found');
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        setformerror('Failed to load user data.');
+      });
+  }
+}, []);
 
   const handlefirstname = (event) => {
     setfirstname(event.target.value)

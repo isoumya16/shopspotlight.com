@@ -31,37 +31,22 @@ exports.registration = (req, res) => {
 };
 
 exports.login = (req, res) => {
-    // const { email, password } = req.body;
-
-    // db.query('SELECT * FROM users WHERE email = ?', [email], (error, results) => {
-
-    //     if (results[0].password !== password) {
-    //         res.send(JSON.stringify({ 'message': 'Invalid email or password' }));
-    //     } else {
-    //         res.send(JSON.stringify({ 'message': 'Login successful', user: results[0] }));
-    //     }
-    // });
-
-    console.log(1);
-
-    console.log(req.body.email);
-
-    if (req.body.email == '') {
-        res.send(JSON.stringify({ 'error': '', 'message': 'Enter your valid email' }))
-    } else if (req.body.password == '') {
-        res.send(JSON.stringify({ 'error': '', 'message': 'Enter your valid password' }))
-    } else {
-        db.query('SELECT * FROM users WHERE email = ? AND password = ?', [req.body.email, req.body.password], (error, result) => {
-            if (error) {
-                res.send(JSON.stringify({ 'error': error.message, 'message': '' }))
-            } else if (result == '') {
-                res.send(JSON.stringify({ 'error': '', 'message': 'Either password or email is wrong' }))
-            } else {
-                res.send(JSON.stringify({ 'error': '', 'message': result[0] }))
-            }
-
-        })
+    if (!req.body.email) {
+        return res.send(JSON.stringify({ 'error': '', 'message': 'Enter your valid email' }));
+    } 
+    if (!req.body.password) {
+        return res.send(JSON.stringify({ 'error': '', 'message': 'Enter your valid password' }));
     }
+
+    db.query('SELECT * FROM users WHERE email = ? AND password = ?', [req.body.email, req.body.password], (error, result) => {
+        if (error) {
+            res.send(JSON.stringify({ 'error': error.message, 'message': '' }));
+        } else if (result.length === 0) {  // fixed here
+            res.send(JSON.stringify({ 'error': '', 'message': 'Either password or email is wrong' }));
+        } else {
+            res.send(JSON.stringify({ 'error': '', 'message': result[0] }));
+        }
+    });
 };
 
 exports.updateuser = (req, res) => {
