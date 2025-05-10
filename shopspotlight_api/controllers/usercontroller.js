@@ -53,11 +53,11 @@ exports.login = (req, res) => {
     } else {
         db.query('SELECT * FROM users WHERE email = ? AND password = ?', [req.body.email, req.body.password], (error, result) => {
             if (error) {
-                res.send(JSON.stringify({ 'error': error.message, 'message': result }))
+                res.send(JSON.stringify({ 'error': error.message, 'message': '' }))
             } else if (result == '') {
                 res.send(JSON.stringify({ 'error': '', 'message': 'Either password or email is wrong' }))
             } else {
-                res.send(JSON.stringify({ 'error': '', 'message': result }))
+                res.send(JSON.stringify({ 'error': '', 'message': result[0] }))
             }
 
         })
