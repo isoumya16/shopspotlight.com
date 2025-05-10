@@ -205,11 +205,11 @@ const Registration = () => {
         } else {
           console.log(response.data.message);
 
-          localStorage.setItem('user_id', response.data.message[0].user_id);
-          localStorage.setItem('firstname', response.data.message[0].firstname);
-          localStorage.setItem('email', response.data.message[0].email);
-          localStorage.setItem('userrole', response.data.message[0].useraccess);
-          localStorage.setItem('profilepic', response.data.message[0].user_image);
+          localStorage.setItem('user_id', response.data.message.user_id);
+          localStorage.setItem('firstname', response.data.message.firstname);
+          localStorage.setItem('email', response.data.message.email);
+          localStorage.setItem('userrole', response.data.message.useraccess);
+          localStorage.setItem('profilepic', response.data.message.user_image);
 
           navigate('/admin/userlist');
 
