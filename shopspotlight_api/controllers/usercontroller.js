@@ -10,7 +10,7 @@ exports.registration = (req, res) => {
         if (error) {
             res.send(JSON.stringify({ 'error': error.message, 'message': '' }))
         } else {
-            res.send(JSON.stringify({ 'error': '', 'message': 'User added successfully', result }))
+            res.send(JSON.stringify({ 'error': '', 'message': result }))
         }
     })
 
