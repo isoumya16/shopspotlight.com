@@ -28,44 +28,44 @@ const Registration = () => {
   console.log(location.pathname.split('/'));
 
   useEffect(() => {
-  if (location.pathname.split('/')[1] === "registration") {
-    setformname('Registration');
-    setbuttonname('Register');
-  } else if (location.pathname.split('/')[1] === "login") {
-    setformname('Login');
-    setbuttonname('Login');
-    setfirstname('default');
-    setlastname('default');
-    setmobileno('1111111111');
-  } else if (location.pathname.split('/')[2] === "edituser") {
-    setformname('Update User Form');
-    setbuttonname('Update User');
+    if (location.pathname.split('/')[1] === "registration") {
+      setformname('Registration');
+      setbuttonname('Register');
+    } else if (location.pathname.split('/')[1] === "login") {
+      setformname('Login');
+      setbuttonname('Login');
+      setfirstname('default');
+      setlastname('default');
+      setmobileno('1111111111');
+    } else if (location.pathname.split('/')[2] === "edituser") {
+      setformname('Update User Form');
+      setbuttonname('Update User');
 
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/users/singleuserlist/${params.id}`)
-      .then(res => res.json())
-      .then(response => {
-        if (response.error) {
-          console.error(response.error);
-          setformerror(response.error);
-        } else if (response.data) {
-          const user = response.data;
-          setfirstname(user.firstname);
-          setlastname(user.lastname);
-          setmobileno(user.mobileno);
-          setuseraccess(user.useraccess);
-          setemail(user.email);
-          setpassword(user.password);
-          setimage({ preview: user.user_image, data: user.user_image });
-        } else {
-          setformerror('No user data found');
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        setformerror('Failed to load user data.');
-      });
-  }
-}, []);
+      fetch(`${process.env.REACT_APP_BACKEND_URL}/users/singleuserlist/${params.id}`)
+        .then(res => res.json())
+        .then(response => {
+          if (response.error) {
+            console.error(response.error);
+            setformerror(response.error);
+          } else if (response.data) {
+            const user = response.data;
+            setfirstname(user.firstname);
+            setlastname(user.lastname);
+            setmobileno(user.mobileno);
+            setuseraccess(user.useraccess);
+            setemail(user.email);
+            setpassword(user.password);
+            setimage({ preview: user.user_image, data: user.user_image });
+          } else {
+            setformerror('No user data found');
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          setformerror('Failed to load user data.');
+        });
+    }
+  }, []);
 
   const handlefirstname = (event) => {
     setfirstname(event.target.value)
@@ -197,39 +197,42 @@ const Registration = () => {
     } else if (location.pathname.split('/')[1] == "login") {
       let formData = { firstname: firstname, lastname: lastname, mobileno: mobileno, email: email, password: password };
 
-      axios.post(`${process.env.REACT_APP_BACKEND_URL}/users/login/`, formData).then((response) => {
-        // console.log(response.data.message);
+      axios.post(`${process.env.REACT_APP_BACKEND_URL}/users/login/`, formData)
+        .then((response) => {
+          const data = response.data;
 
-        if (response.data.message == "Either password or email is wrong") {
-          setformerror(response.data.message);
-        } else {
-          console.log(response.data.message);
+          if (data.message === "Either password or email is wrong") {
+            setformerror(data.message);
+          } else {
+            console.log("Login successful response:", data.message);
 
-          localStorage.setItem('user_id', response.data.message.user_id);
-          localStorage.setItem('firstname', response.data.message.firstname);
-          localStorage.setItem('email', response.data.message.email);
-          localStorage.setItem('userrole', response.data.message.useraccess);
-          localStorage.setItem('profilepic', response.data.message.user_image);
+            // Destructure user data from response
+            const { user_id, firstname, email, useraccess, user_image } = data.message;
 
-          navigate('/admin/userlist');
+            // Store in localStorage
+            localStorage.setItem('user_id', user_id);
+            localStorage.setItem('firstname', firstname);
+            localStorage.setItem('email', email);
+            localStorage.setItem('userrole', useraccess);
+            localStorage.setItem('profilepic', user_image);
 
-          const userrole = localStorage.getItem('userrole');
-
-          if (userrole == "Admin") {
-            navigate('/admin');
-            // console.log("Admin");
-
-          } else if (userrole == "Supplier") {
-            navigate('/supplier');
-            // console.log("Supplier");
-
-          } else if (userrole == "User") {
-            navigate('/user');
-            // console.log("User");
+            // Navigate based on user role
+            if (useraccess === "Admin") {
+              navigate('/admin');
+            } else if (useraccess === "Supplier") {
+              navigate('/supplier');
+            } else if (useraccess === "User") {
+              navigate('/user');
+            } else {
+              navigate('/admin/userlist');
+            }
           }
-        }
+        })
+        .catch((error) => {
+          console.error("Login error:", error);
+          setformerror("Login failed. Please try again.");
+        });
 
-      })
     }
 
   }
