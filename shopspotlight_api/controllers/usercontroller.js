@@ -158,7 +158,7 @@ exports.singleuserlist = (req, res) => {
         if (error) {
             res.send(JSON.stringify({ 'error': error.message, 'message': '' }))
         } else {
-            res.send(JSON.stringify({ 'error': '', 'message': result }))
+            res.send(JSON.stringify({ 'error': '', 'message': result[0] }))
         }
     })
 };
