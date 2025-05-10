@@ -216,12 +216,14 @@ const Registration = () => {
             localStorage.setItem('userrole', useraccess);
             localStorage.setItem('profilepic', user_image);
 
+            const userrole = localStorage.getItem('userrole');
+
             // Navigate based on user role
-            if (useraccess === "Admin") {
+            if (userrole === "Admin") {
               navigate('/admin');
-            } else if (useraccess === "Supplier") {
+            } else if (userrole === "Supplier") {
               navigate('/supplier');
-            } else if (useraccess === "User") {
+            } else if (userrole === "User") {
               navigate('/user');
             } else {
               navigate('/admin/userlist');
