@@ -155,7 +155,7 @@ exports.singleuserlist = (req, res) => {
 
     db.query('SELECT * FROM users WHERE ?', [users_id], (error, result) => {
         if (error) {
-            res.send(JSON.stringify({ 'error': error.message, 'message': '' }))
+            res.send(JSON.stringify({ 'error': error.message, 'message': [] }))
         } else {
             res.send(JSON.stringify({ 'error': '', 'message': result }))
         }
