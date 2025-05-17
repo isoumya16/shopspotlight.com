@@ -211,15 +211,15 @@ const Registration = () => {
         // console.log(response.data.message);
 
         if (response.data.message == "Either password or email is wrong") {
-          setformerror(response.data.message);
+          setformerror(response.message);
         } else {
-          console.log(response.data.message);
+          console.log(response.message);
 
-          localStorage.setItem('user_id', response.data.message[0].user_id);
-          localStorage.setItem('firstname', response.data.message[0].firstname);
-          localStorage.setItem('email', response.data.message[0].email);
-          localStorage.setItem('userrole', response.data.message[0].useraccess);
-          localStorage.setItem('profilepic', response.data.message[0].user_image);
+          localStorage.setItem('user_id', response.message[0].user_id);
+          localStorage.setItem('firstname', response.message[0].firstname);
+          localStorage.setItem('email', response.message[0].email);
+          localStorage.setItem('userrole', response.message[0].useraccess);
+          localStorage.setItem('profilepic', response.message[0].user_image);
 
           navigate('/admin/userlist');
 
