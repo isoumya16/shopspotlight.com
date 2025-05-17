@@ -1,0 +1,239 @@
+/* .cart-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cart-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cart-item img {
+    width: 80px;
+    height: 80px;
+    border-radius: 6px;
+    object-fit: cover;
+  }
+  
+  .cart-item-details {
+    flex: 1;
+    margin-left: 20px;
+  }
+  
+  .cart-item-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .cart-item-price {
+    font-size: 16px;
+    color: #777;
+  }
+  
+  .cart-item-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .cart-item-actions button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cart-item-actions .remove-btn {
+    background-color: #f44336;
+    color: #fff;
+  }
+  
+  .cart-item-actions .remove-btn:hover {
+    background-color: #d32f2f;
+  }
+  
+  .cart-item-actions .edit-btn {
+    background-color: #2196f3;
+    color: #fff;
+  }
+  
+  .cart-item-actions .edit-btn:hover {
+    background-color: #1976d2;
+  }
+  
+  .cart-total {
+    text-align: right;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 20px;
+  }
+  
+  .quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .quantity-control button {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .quantity-control button:hover {
+    background-color: #ddd;
+  }
+  
+  .quantity-control span {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .cart-item-subtotal {
+    font-size: 16px;
+    color: #555;
+    margin-top: 5px;
+  }
+  
+  .cart-total {
+    text-align: right;
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+  } */
+
+.cart{
+  margin-top: 100px;
+  padding: 15px;
+}
+
+.cart-items-title{
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 0.5fr;
+  align-items: center;
+  color: grey;
+  font-size: max(1vw,12px);
+}
+
+.cart-items-item{
+  margin: 10px 0px;
+  color: black;
+}
+
+.cart-items-item img{
+  width: 50px;
+}
+
+.cart hr{
+  height: 1px;
+  background-color: #e2e2e2;
+  border: none;
+}
+
+.cart-items-item .cross{
+  cursor: pointer;
+}
+
+.cart-bottom{
+  margin-top: 80px;
+  display: flex;
+  justify-content: space-between;
+  gap: max(12vw,20px);
+}
+
+.cart-total{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cart-total-details{
+  display: flex;
+  justify-content: space-between;
+  color: #555;
+}
+
+.cart-total hr{
+  margin: 10px 0px;
+}
+
+.cart-total button{
+  border: none;
+  color: white;
+  background-color: tomato;
+  width: max(15vw,200px);
+  padding: 12px 0px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cart-promocode{
+  flex: 1;
+}
+
+.cart-promocode p{
+  color: #555;
+}
+
+.cart-promocode-input{
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #eaeaea;
+  border-radius: 4px;
+}
+
+.cart-promocode-input input{
+  background: transparent;
+  border: none;
+  outline: none;
+  padding-left: 10px;
+}
+
+.cart-promocode-input button{
+  width: max(10vw,150px);
+  padding: 12px 5px;
+  background-color: black;
+  border: none;
+  color: white;
+  border-radius: 4px;
+}
+
+@media (max-width:750px) {
+  .cart-bottom{
+    flex-direction: column-reverse;
+  }
+
+  .cart-promocode{
+    justify-content: start;
+  }
+}
