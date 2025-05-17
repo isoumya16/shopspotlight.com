@@ -4,7 +4,7 @@ exports.addcategory = (req, res) => {
 
     const { category_name, category_description } = req.body;
 
-    const category_image = req.file ? `http://localhost:5000/image/${req.file.filename}` : '';
+    const category_image = req.file ? `${process.env.BACKEND_URL}/image/${req.file.filename}` : '';
     db.query('INSERT INTO categories (category_name, category_description, category_image) VALUES (?, ?, ?)', [category_name, category_description, category_image], (error, result) => {
         if (error) {
             res.send(JSON.stringify({ 'error': error.message, 'message': '' }))
@@ -21,7 +21,7 @@ exports.updatecategory = (req, res) => {
     console.log(req.file);
     
     if (req.file != undefined) {
-        let updatedData = [req.body.category_name, req.body.category_description, req.file ? `http://localhost:5000/image/${req.file.filename}` : req.body.category_image, categories_id];
+        let updatedData = [req.body.category_name, req.body.category_description, req.file ? `${process.env.BACKEND_URL}/image/${req.file.filename}` : req.body.category_image, categories_id];
 
         db.query('UPDATE categories SET category_name = ?, category_description = ?, category_image = ? WHERE category_id = ?', updatedData, (error, result) => {
             if (error) {

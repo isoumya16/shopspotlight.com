@@ -4,7 +4,7 @@ exports.registration = (req, res) => {
 
     const { firstname, lastname, useraccess, mobileno, email, password } = req.body;
 
-    const image = req.file ? `http://localhost:5000/image/${req.file.filename}` : '';
+    const image = req.file ? `${process.env.BACKEND_URL}/image/${req.file.filename}` : '';
     db.query('INSERT INTO users (firstname, lastname, useraccess, mobileno, email, password, user_image) VALUES (?, ?, ?, ?, ?, ?, ?)', [firstname, lastname, useraccess, mobileno, email, password, image], (error, result) => {
         if (error) {
             res.send(JSON.stringify({ 'error': error.message, 'message': '' }))
@@ -96,7 +96,7 @@ exports.updateuser = (req, res) => {
             req.body.mobileno,
             req.body.email,
             req.body.password,
-            req.file ? `http://localhost:5000/image/${req.file.filename}` : req.body.user_image,
+            req.file ? `${process.env.BACKEND_URL}/image/${req.file.filename}` : req.body.user_image,
             users_id];
 
         db.query('UPDATE users SET firstname = ?, lastname = ?, useraccess = ?, mobileno = ?, email = ?, password = ?, user_image = ? WHERE user_id = ?', updatedData, (error, result) => {

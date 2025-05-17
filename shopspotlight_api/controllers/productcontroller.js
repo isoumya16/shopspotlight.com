@@ -218,7 +218,7 @@ exports.addproduct = (req, res) => {
 
     const { category_id, subcategory_id, product_name, product_description, product_qty, product_price, product_likes, product_views } = req.body;
 
-    const product_image = req.file ? `http://localhost:5000/image/${req.file.filename}` : '';
+    const product_image = req.file ? `${process.env.BACKEND_URL}/image/${req.file.filename}` : '';
     db.query('INSERT INTO products (category_id, subcategory_id, product_image, product_name, product_description, product_qty, product_price, product_likes, product_views) VALUES (?, ?, ?, ?, ?, ?, ? , ?, ?)', [category_id, subcategory_id, product_image, product_name, product_description, product_qty, product_price, product_likes, product_views], (error, result) => {
         if (error) {
             res.send(JSON.stringify({ 'error': error.message, 'message': '' }))
@@ -246,7 +246,7 @@ exports.updateproduct = (req, res) => {
 
     if (req.file != undefined) {
         let updatedData = [req.body.category_id, req.body.subcategory_id, req.body.product_name,
-            req.body.product_description, req.body.product_price, req.file ? `http://localhost:5000/image/${req.file.filename}` : req.body.product_image, products_id];
+            req.body.product_description, req.body.product_price, req.file ? `${process.env.BACKEND_URL}/image/${req.file.filename}` : req.body.product_image, products_id];
         
             db.query('UPDATE products SET category_id = ?, subcategory_id = ?, product_name = ?, product_description = ?, product_price = ?, product_image = ? WHERE product_id = ?', updatedData, (error, result) => {
                 if (error) {

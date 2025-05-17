@@ -4,7 +4,7 @@ exports.addsubcategory = (req, res) => {
 
     const { category_id, subcategory_description } = req.body;
 
-    const subcategory_image = req.file ? `http://localhost:5000/image/${req.file.filename}` : '';
+    const subcategory_image = req.file ? `${process.env.BACKEND_URL}/image/${req.file.filename}` : '';
     db.query('INSERT INTO subcategories (category_id, subcategory_description, subcategory_image) VALUES (?, ?, ?)', [category_id, subcategory_description, subcategory_image], (error, result) => {
         if (error) {
             res.send(JSON.stringify({ 'error': error.message, 'message': '' }))
@@ -19,7 +19,7 @@ exports.updatesubcategory = (req, res) => {
     let subcategories_id = req.params.id;
 
     if (req.file != undefined) {
-        let updatedData = [req.body.category_id, req.body.subcategory_description, req.file ? `http://localhost:5000/image/${req.file.filename}` : req.body.subcategory_image, subcategories_id];
+        let updatedData = [req.body.category_id, req.body.subcategory_description, req.file ? `${process.env.BACKEND_URL}/image/${req.file.filename}` : req.body.subcategory_image, subcategories_id];
 
     db.query('UPDATE subcategories SET category_id = ?, subcategory_description = ?, subcategory_image = ? WHERE subcategory_id = ?', updatedData, (error, result) => {
         if (error) {
