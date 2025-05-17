@@ -23,6 +23,8 @@ const Registration = () => {
   const emailexpression = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
   const passwordexpression = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
 
+  const API_URL = process.env.REACT_APP_API_URL;
+
   // let formData = { firstname: firstname, lastname: lastname, mobileno: mobileno, email: email, password: password, title: title, cat: category, subcat: subcategory, description: description, price: price, img: img };
 
   console.log(location.pathname.split('/'));
@@ -57,7 +59,7 @@ const Registration = () => {
       //   setimage({ preview: response.data.message[0].user_image, data: response.data.message[0].user_image });
       // })
 
-      fetch(`${process.env.REACT_APP_API_URL}/users/singleuserlist/${params.id}`)
+      fetch(`${API_URL}/users/singleuserlist/${params.id}`)
         .then(response => response.json())
         .then(response => {
           if (response && response.message && response.message.length > 0) {
@@ -75,7 +77,7 @@ const Registration = () => {
 
         });
     }
-  }, [])
+  }, [location.pathname, params.id, API_URL])
 
   const handlefirstname = (event) => {
     setfirstname(event.target.value)
@@ -175,12 +177,12 @@ const Registration = () => {
       // )
 
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/users/registration/`, {
+        const response = await fetch(`${API_URL}/users/registration/`, {
           method: 'POST',
           body: formData,
         });
         const data = await response.json();
-        if (data) {
+        if (data && data.message) {
           //   alert('User added successfully');
 
           navigate('/login');
@@ -192,7 +194,7 @@ const Registration = () => {
       }
     } else if (location.pathname.split('/')[2] == "edituser") {
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/users/updateuser/${params.id}`, {
+        const response = await fetch(`${API_URL}/users/updateuser/${params.id}`, {
           method: 'PUT',
           body: formData,
         });
@@ -207,23 +209,21 @@ const Registration = () => {
     } else if (location.pathname.split('/')[1] == "login") {
       let formData = { firstname: firstname, lastname: lastname, mobileno: mobileno, email: email, password: password };
 
-      axios.post(`${process.env.REACT_APP_API_URL}/users/login/`, formData).then((response) => {
+      axios.post(`${API_URL}/users/login/`, formData).then((response) => {
         // console.log(response.data.message);
 
         if (response.data.message == "Either password or email is wrong") {
-          setformerror(response.message);
+          setformerror(response.data.message);
         } else {
-          console.log(response.message);
+          console.log(response.data.message);
 
-          localStorage.setItem('user_id', response.message[0].user_id);
-          localStorage.setItem('firstname', response.message[0].firstname);
-          localStorage.setItem('email', response.message[0].email);
-          localStorage.setItem('userrole', response.message[0].useraccess);
-          localStorage.setItem('profilepic', response.message[0].user_image);
+          localStorage.setItem('user_id', response.data.message[0].user_id);
+          localStorage.setItem('firstname', response.data.message[0].firstname);
+          localStorage.setItem('email', response.data.message[0].email);
+          localStorage.setItem('userrole', response.data.message[0].useraccess);
+          localStorage.setItem('profilepic', response.data.message[0].user_image);
 
-          navigate('/admin/userlist');
-
-          const userrole = localStorage.getItem('userrole');
+          const userrole = response.data.message[0].useraccess;
 
           if (userrole == "Admin") {
             navigate('/admin');
@@ -236,6 +236,8 @@ const Registration = () => {
           } else if (userrole == "User") {
             navigate('/user');
             // console.log("User");
+          } else {
+            navigate('/admin/userlist');
           }
         }
 
